@@ -1,5 +1,7 @@
 "use strict";
 
+// import $grabTitleAuthorURLInput from models.js 
+
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
@@ -50,3 +52,52 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+//adds a form to submit author, title, URL 
+const $createAuthorTitleUrlForm = () => {
+  let $newForm = $('<form id="submit-form" class="hidden"></form>'); // Added closing quote for id
+  $('section.stories-container.container').prepend($newForm);
+
+  const inputDataArr = ['author', 'title', 'url'];
+  const placeholderDataArr = ['author name', 'story title', 'story url'];
+
+  for (let index = 0; index < 3; index++) {
+      let currentInputData = inputDataArr[index];
+      let currentPlaceholder = placeholderDataArr[index];
+
+      let $newDiv = $('<div></div>');
+      let $newLabel = $(`<label for='create-${currentInputData}'>${currentInputData}</label>`);
+      let $newInput = $(`<input id='create-${currentInputData}' required placeholder='${currentPlaceholder}'>`);
+      $newForm.append($newDiv.append($newLabel, $newInput));
+  }
+  let $newButton = $(`<button type='submit'>submit</button>`)
+  $newButton.on('click', (async () => {
+    let input = $grabTitleAuthorURLInput()
+    let $newStory = await storyList.addStory(currentUser, input)
+    const $story = generateStoryMarkup($newStory);
+    $allStoriesList.append($story);
+  }))
+  $newForm.append($newButton, '<hr>');
+  return $newForm
+}
+
+const $grabTitleAuthorURLInput = (e) => {
+  // $(e).preventDefault();
+  let userInputObj = {
+      author: null,
+      title: null,
+      url: null,
+  }
+  let $authorInput = $('input#create-author').val()
+  let $titleInput = $('input#create-title').val()
+  let $urlInput = $('input#create-url').val()
+  
+  //code here to update userInputObj
+  userInputObj.author = $authorInput
+  userInputObj.title = $titleInput
+  userInputObj.url = $urlInput
+  console.log(`userinputobj is `, userInputObj)
+  return userInputObj
+}
+
+console.log(storyList)

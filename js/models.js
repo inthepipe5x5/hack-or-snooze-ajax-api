@@ -24,8 +24,9 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    let url = new URL(this.url)
+    let hostName = url.hostname
+    return hostName
   }
 }
 
@@ -73,9 +74,34 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
+  async addStory ( user, userStoryURLobj) {
     // UNIMPLEMENTED: complete this function!
     
+    const randNum = (numLim) => Math.floor(Math.random() * numLim)
+    const randLetterOrNumber = () => {
+      let char = 'abcdefghijklmnopqrstuvxyz1234567890';
+      return char[randNum(char.length)]
+    };   
+    const genRandId = (length=7) => {
+        let id = randLetterOrNumber();
+        
+        while (id.length < length) {
+            id += randLetterOrNumber()
+        }
+        
+        return id
+    }
+ 
+    let currentDate = new Date()
+    let randId = genRandId(7);
+    let {author, title, url} = userStoryURLobj //authorTitleUrlInput) //not sure where newStory comes from yet
+    // let currUserName = await checkForRememberedUser() ? user : 'userName' //
+    
+    console.log(`pre story`, randId, title,author, url, user, currentDate)
+    let currUserName = user.username ? user.username : 'anonymous'  
+    let newStoryInstance = new Story ({storyId: randId, title, author, url, username: currUserName, createdAt: currentDate})
+    console.log(`story instance is `, newStoryInstance)
+    return newStoryInstance
   }
 }
 
