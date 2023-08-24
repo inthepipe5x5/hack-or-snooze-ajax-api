@@ -94,17 +94,43 @@ class StoryList {
  
     let currentDate = new Date()
     let randId = genRandId(7);
-    let {author, title, url} = userStoryURLobj //authorTitleUrlInput) //not sure where newStory comes from yet
-    // let currUserName = await checkForRememberedUser() ? user : 'userName' //
+    let {author, title, url} = userStoryURLobj 
     
     console.log(`pre story`, randId, title,author, url, user, currentDate)
     let currUserName = user.username ? user.username : 'anonymous'  
     let newStoryInstance = new Story ({storyId: randId, title, author, url, username: currUserName, createdAt: currentDate})
     console.log(`story instance is `, newStoryInstance)
-    return newStoryInstance
+    
+    let response = await axios.post(BASE_URL + '/stories', newStoryInstance)
+    return response 
   }
 }
 
+(async ()=>{const newBASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
+
+const storiesEndPoint = '/stories'
+const authEndPoint = BASE_URL + '/auth'
+
+const postData = async (url, paramObj) => { //posts data and gets JWT token
+    let response = await axios.post(url, paramObj)
+    console.log(response)
+    return response.data
+}
+
+const data = {
+    data: {
+      username: 'test',
+      password: 'foo'
+    }
+  };
+  
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+await postData(BASE_URL+authEndPoint, data, config)})()
 
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
