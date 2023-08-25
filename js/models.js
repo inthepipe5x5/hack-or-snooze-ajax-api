@@ -94,43 +94,30 @@ class StoryList {
  
     let currentDate = new Date()
     let randId = genRandId(7);
-    let {author, title, url} = userStoryURLobj 
+    let {author, title, url} = userStoryURLobj
+    let token = currentUser.loginToken? currentUser.loginToken : localStorage.getItem('token') 
     
     console.log(`pre story`, randId, title,author, url, user, currentDate)
-    let currUserName = user.username ? user.username : 'anonymous'  
+    let currUserName = user.username ? user.username : localStorage.getItem('username')  
     let newStoryInstance = new Story ({storyId: randId, title, author, url, username: currUserName, createdAt: currentDate})
     console.log(`story instance is `, newStoryInstance)
     
-    let response = await axios.post(BASE_URL + '/stories', newStoryInstance)
+    let response = await axios.post(BASE_URL + '/stories', 
+    {
+      story: 
+      {
+        title, author, url, username: currUserName
+      }, 
+      token
+    }, 
+    
+    {params: {token}})
+    console.log(response)
+    location.reload()
     return response 
   }
 }
 
-(async ()=>{const newBASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
-
-const storiesEndPoint = '/stories'
-const authEndPoint = BASE_URL + '/auth'
-
-const postData = async (url, paramObj) => { //posts data and gets JWT token
-    let response = await axios.post(url, paramObj)
-    console.log(response)
-    return response.data
-}
-
-const data = {
-    data: {
-      username: 'test',
-      password: 'foo'
-    }
-  };
-  
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-await postData(BASE_URL+authEndPoint, data, config)})()
 
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
@@ -246,4 +233,45 @@ class User {
       return null;
     }
   }
+
+  addFavorite = async (inputObj, token) => {
+    let url = BASE_URL + `/users/${username}/favorites/${storyId}`
+    let response = await axios.post(url, inputObj, token)
+    currentUser = response
+  }
+  
+  removeFavorite = async (inputObj, token) => {
+    let url = BASE_URL + `/users/${username}/favorites/${storyId}`
+    let response = await axios.delete(url, inputObj, token)
+    currentUser = response
+  }
+  
+  handleFavorites = async (evt) => {
+    let username = currentUser ? currentUser.username : localStorage.getItem('username')
+    let token = currentUser ? currentUser.token : localStorage.getItem('token')
+    let $favourite = evt.target.tagName === 'INPUT' && evt.target.attr('type') === 'checkbox' ? evt.target : $(evt.target).closest($('input[type="checkbox"]')) ; //set this equal to evt.target
+    let storyId = $favourite.closest('li').attr('id') //not sure this is right syntax for .closest()
+  
+  
+    if ($favourite.val() === true) await currentUser.addFavorite({storyId, username, token});
+    if ($favourite.val() === false) await currentUser.removeFavorite({storyId, username, token});
+  }
+  
+  $handleNavClick = async (evt, idModifier) => {
+    if ($(evt.target).attr(id) === `${idModifier}-stories`) {
+      idModifier === 'favourite'? currentUser.favorites() : currentUser.ownStories();
+      
+      let $newDiv = $(`<div id ="${idModifier}-stories"></div>`)
+      let $storyDiv = $('section.stories-container.container')
+      $storyDiv.empty().append($newDiv)
+  
+      let listofOwnAndFavoriteStories = [this.favorites, this.ownStories]
+  
+      let contentList = idModifier === 'favourite'? listofOwnAndFavoriteStories[0] : listofOwnAndFavoriteStories[1];
+  
+      contentList.forEach(story => {
+        $newDiv.append(generateStoryMarkup(story))
+      });
+    } 
+  } 
 }

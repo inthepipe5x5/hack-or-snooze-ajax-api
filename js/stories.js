@@ -27,6 +27,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        <input type="checkbox" id='favorite-checkbox'><input>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -81,7 +82,7 @@ const $createAuthorTitleUrlForm = () => {
   return $newForm
 }
 
-const $grabTitleAuthorURLInput = (e) => {
+const $grabTitleAuthorURLInput = () => {
   // $(e).preventDefault();
   let userInputObj = {
       author: null,
@@ -100,4 +101,3 @@ const $grabTitleAuthorURLInput = (e) => {
   return userInputObj
 }
 
-console.log(storyList)
