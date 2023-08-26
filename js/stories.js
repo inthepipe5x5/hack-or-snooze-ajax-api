@@ -26,15 +26,27 @@ function generateStoryMarkup(story) {
 
   const hostName = story.getHostName();
   return $(`
-      <li id="${story.storyId}">
-        <input type="checkbox" id='favorite-checkbox'><input>
-        <a href="${story.url}" target="a_blank" class="story-link">
-          ${story.title}
-        </a>
-        <small class="story-hostname">(${hostName})</small>
-        <small class="story-author">by ${story.author}</small>
-        <small class="story-user">posted by ${story.username}</small>
-      </li>
+  <span class = "row">
+  <li id="${story.storyId}">
+    <input type="checkbox" class='favorite-checkbox' id=${story.storyId}></input>
+    
+    <div class = "d-flex flex-column bd-hightlight justify-content-start">
+      <a href="${story.url}" target="a_blank" class="story-link">
+        ${story.title}
+      </a>
+      <small class="story-hostname">(${hostName})</small>
+
+      <div class = "col">
+        <small class="story-author col .text-success">by ${story.author}</small>
+      </div>
+      <div class = "col">
+        <small class="story-user col .text-warning">posted by ${story.username}</small>
+      </div>
+
+    </div> 
+  <hr>
+  </li>
+</span>
     `);
 }
 
