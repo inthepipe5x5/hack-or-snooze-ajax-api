@@ -24,6 +24,7 @@
     href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="css/site.css">
     <link rel="stylesheet" href="css/user.css">
     <link rel="stylesheet" href="css/stories.css">
@@ -49,290 +50,24 @@
 <section class="stories-container container">
     
     <!-- loading message (removed by JS after stories loaded) -->
-    <div id="stories-loading-msg">Loading&hellip;</div>
+    <!-- <div id="stories-loading-msg">Loading&hellip;</div> -->
     
     <!-- List of all stories -->
-    <ol id="all-stories-list" class="stories-list"><span class="row">
-        <span class = "row">
-            <input type="checkbox" class='favorite-checkbox' id=${story.storyId}></input>
-            <li id="${story.storyId}">
-              <div class = "d-flex flex-column bd-hightlight justify-content-start">
-                <div class="col">
-                  <a href="${story.url}" target="a_blank" class="story-link">
-                    ${story.title} IS HAPPENING WOW
-                  </a>
-                  <small class="story-hostname">(WWW.${hostName}.COM)</small>
-                </div>
-                <div class = "col">
-                  <small class="story-author col text-success">by ${story.author}</small>
-                </div>
-                <div class = "col">
-                  <small class="story-user col text-warning">posted by ${story.username}</small>
-                </div>
-              </div> 
+    <ol id="all-stories-list" class="stories-list">
+          <li id="${story.storyId}" class="container-fluid">
+            <div class="row">
+              <input type="checkbox" class='favorite-checkbox col-1' id=${story.storyId}></input>
+              <div class="container-fluid">
+                <div class="col-4">A</div>
+                <div class="col-4">B</div>
+                <div class="col-4">C</div>
+              </div>
+            </div>
+          
             <hr>
-            </li>
-          </span>
-        <li id="0cb6d385-c262-49e7-a08f-154317253820">
-            <input type="checkbox" class="favorite-checkbox" id="0cb6d385-c262-49e7-a08f-154317253820">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.rithmschool.com/blog/developer-productivity" target="a_blank" class="story-link">
-                Four Tips for Moving Faster as a Developer
-            </a>
-            <small class="story-hostname">(www.rithmschool.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by CruzLa5</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="403dcc68-6140-42c6-a4fe-37b87db45176">
-            <input type="checkbox" class="favorite-checkbox" id="403dcc68-6140-42c6-a4fe-37b87db45176">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="http://www.youtube.com" target="a_blank" class="story-link">
-                youtube
-            </a>
-            <small class="story-hostname">(www.youtube.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by salpal</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by salpal</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="f6821924-bc5e-4303-ab9c-7f927ffbeb92">
-            <input type="checkbox" class="favorite-checkbox" id="f6821924-bc5e-4303-ab9c-7f927ffbeb92">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.google.com" target="a_blank" class="story-link">
-                hdkjgakjs
-            </a>
-            <small class="story-hostname">(www.google.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Colt Steele</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by jdelpino</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="3ff40f93-4837-4110-84cd-1ecc809749a4">
-            <input type="checkbox" class="favorite-checkbox" id="3ff40f93-4837-4110-84cd-1ecc809749a4">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.google.com" target="a_blank" class="story-link">
-                5322523542
-            </a>
-            <small class="story-hostname">(www.google.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Colt Steele</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by jdelpino</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="38e49e24-f6cc-4f38-9c95-5a880ff3a6cb">
-            <input type="checkbox" class="favorite-checkbox" id="38e49e24-f6cc-4f38-9c95-5a880ff3a6cb">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.google.com" target="a_blank" class="story-link">
-                Coconut, that's the name of my cat
-            </a>
-            <small class="story-hostname">(www.google.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Colt Steele</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by jdelpino</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="9092b2a7-2458-4a14-9a57-c0ae7bf61506">
-            <input type="checkbox" class="favorite-checkbox" id="9092b2a7-2458-4a14-9a57-c0ae7bf61506">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://en.wikipedia.org/wiki/Potato" target="a_blank" class="story-link">
-                123
-            </a>
-            <small class="story-hostname">(en.wikipedia.org)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Potato</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by CaptainJack</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="576f5e2e-47ad-4f45-a98b-59667b105e87">
-            <input type="checkbox" class="favorite-checkbox" id="576f5e2e-47ad-4f45-a98b-59667b105e87">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.springboard.com/" target="a_blank" class="story-link">
-                Springboard's latest news!
-            </a>
-            <small class="story-hostname">(www.springboard.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by cinci</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="f5630407-bfe1-45b2-aaa4-97ac2e64d0c6">
-            <input type="checkbox" class="favorite-checkbox" id="f5630407-bfe1-45b2-aaa4-97ac2e64d0c6">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://github.com/spieglt/nestur" target="a_blank" class="story-link">
-                NES Emulator in Rust
-            </a>
-            <small class="story-hostname">(github.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by cinci</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="c24c0aae-e496-484a-94be-14eee37bdf4d">
-            <input type="checkbox" class="favorite-checkbox" id="c24c0aae-e496-484a-94be-14eee37bdf4d">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.google.com" target="a_blank" class="story-link">
-                Google!
-            </a>
-            <small class="story-hostname">(www.google.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by cinci</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="5cd6b89f-3880-4656-a968-bff614222995">
-            <input type="checkbox" class="favorite-checkbox" id="5cd6b89f-3880-4656-a968-bff614222995">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="http://catless.ncl.ac.uk/Risks/16.54.html#subj2" target="a_blank" class="story-link">
-                Ottawa Library fines people using unreliable automatic calling system (1994)
-            </a>
-            <small class="story-hostname">(catless.ncl.ac.uk)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by cinci</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="25281533-426c-45cb-a072-1c0d5dee71ee">
-            <input type="checkbox" class="favorite-checkbox" id="25281533-426c-45cb-a072-1c0d5dee71ee">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.theatlantic.com/magazine/archive/2019/05/stock-value-satellite-images-investing/586009/" target="a_blank" class="story-link">
-                Stock Picks from Space (2019)
-            </a>
-            <small class="story-hostname">(www.theatlantic.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by cinci</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="7cc7b587-f055-4968-a2e5-6ed70d18ae97">
-            <input type="checkbox" class="favorite-checkbox" id="7cc7b587-f055-4968-a2e5-6ed70d18ae97">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="http://blog.eladgil.com/2020/01/products-i-wish-existed-2020-edition.html" target="a_blank" class="story-link">
-                Products I wish existed
-            </a>
-            <small class="story-hostname">(blog.eladgil.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by cinci</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span><span class="row">
-        <li id="58d3ab3f-8adc-48f4-8945-f532c6b36a3d">
-            <input type="checkbox" class="favorite-checkbox" id="58d3ab3f-8adc-48f4-8945-f532c6b36a3d">
-            
-            <div class="d-flex flex-column bd-hightlight justify-content-start">
-            <a href="https://www.ccn.com/buffett-indicator-warns-stocks-doomed-worse-crash-than-2008/" target="a_blank" class="story-link">
-                ‘Buffett Indicator’ Warns Stocks Doomed for Worse Crash Than 2008
-            </a>
-            <small class="story-hostname">(www.ccn.com)</small>
-        
-            <div class="col">
-                <small class="story-author col .text-success">by Elie Schoppik</small>
-            </div>
-            <div class="col">
-                <small class="story-user col .text-warning">posted by cinci</small>
-            </div>
-        
-            </div> 
-        <hr>
-        </li>
-        </span></ol>
+        </li>  
+  
+    </ol>
     
 </section>
 
@@ -380,35 +115,14 @@
 <!-- Library JS & our JS -->
 <script src="https://unpkg.com/jquery"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
 
-<script src="js/models.js"></script>
+<!-- <script src="js/models.js"></script>
 <script src="js/main.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/user.js"></script>
-<script src="js/stories.js"></script>
+<script src="js/stories.js"></script> -->
 
 </body>
 </html>
 
-<!-- example content generated on -->
-    <span class = "row">
-      <input type="checkbox" class='favorite-checkbox' id=${story.storyId}></input>
-      <li id="${story.storyId}">
-        <div class = "d-flex flex-column bd-hightlight justify-content-start">
-          <div class="col">
-            <a href="${story.url}" target="a_blank" class="story-link">
-              ${story.title}
-            </a>
-            <small class="story-hostname">(${hostName})</small>
-          </div>
-          <div class = "col">
-            <small class="story-author col text-success">by ${story.author}</small>
-          </div>
-          <div class = "col">
-            <small class="story-user col text-warning">posted by ${story.username}</small>
-          </div>
-        </div> 
-      <hr>
-      </li>
-    </span>
-<!-- markup test to be put into JS function to generateStoryMarkUp -->

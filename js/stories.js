@@ -24,14 +24,9 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
-  const hostName = story.getHostName();
+  const hostName = Story.getHostName(story);
   return $(`
-  <div class="container">
-  <div class = "row">
   <li id="${story.storyId}">
-      <span class="col-1">
-          <input type="checkbox" class='favorite-checkbox col-1' id=${story.storyId}></input>
-      </span>
       <span class="col-11">
           <span class = "col-1">
           </span>
@@ -49,11 +44,9 @@ function generateStoryMarkup(story) {
                   <small class="story-user col text-warning">posted by ${story.username}</small>
               </div>         
           </div>
-          </li>
-      </span> 
+          </span> 
+        </li>
       <hr>
-</div>
-</div>
     `);
 }
 
@@ -69,7 +62,7 @@ function putStoriesOnPage() {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
-
+  if (currentUser) $createSaveStoryCheckboxes();
   $allStoriesList.show();
 }
 
@@ -120,23 +113,20 @@ const $grabTitleAuthorURLInput = () => {
   return userInputObj
 }
 
-// $(document).ready(async function () {
-//   $('ol#all-stories-list').on('change', 'input[type="checkbox"]', await currentUser.handleFavorites(e));
-// });
 
-$(document).ready(function () {
-if (currentUser)
-  {
-    $('ol#all-stories-list').on('change', 'input[type="checkbox"]', function () {
-      if ($(this).prop('checked')) {
-        // Checkbox is checked, perform action
-        console.log('Checkbox checked', $(':checked').eq(-1), $(this));
-        // Your code to handle the checked state
-      } else {
-        // Checkbox is unchecked, perform action
-        console.log('Checkbox unchecked', $(':not(:checked)').eq(-1), $(this));
-        // Your code to handle the unchecked state
-      }
-    });
+$('ol#all-stories-list').on('change', 'input[type="checkbox"]', async function () {
+  let storyId = $(this).closest('li').attr('id');
+  let faveOrNotBool = $(this).prop('checked'); //is checkbox ticked off = true or false
+  let user = currentUser ? currentUser : checkForRememberedUser() 
+  if ($(this).prop('checked')) {
+    // Checkbox is checked, perform action
+    currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to save stories to favorites')
+    $createSaveStoryCheckboxes()
+
+  } else {
+    // Checkbox is unchecked, perform action
+    currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to remove stories from favorites')
+    $createSaveStoryCheckboxes()
   }
 });
+
