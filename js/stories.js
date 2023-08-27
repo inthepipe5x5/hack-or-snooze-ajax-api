@@ -26,27 +26,34 @@ function generateStoryMarkup(story) {
 
   const hostName = story.getHostName();
   return $(`
-  <span class = "row">
+  <div class="container">
+  <div class = "row">
   <li id="${story.storyId}">
-    <input type="checkbox" class='favorite-checkbox' id=${story.storyId}></input>
-    
-    <div class = "d-flex flex-column bd-hightlight justify-content-start">
-      <a href="${story.url}" target="a_blank" class="story-link">
-        ${story.title}
-      </a>
-      <small class="story-hostname">(${hostName})</small>
-
-      <div class = "col">
-        <small class="story-author col .text-success">by ${story.author}</small>
-      </div>
-      <div class = "col">
-        <small class="story-user col .text-warning">posted by ${story.username}</small>
-      </div>
-
-    </div> 
-  <hr>
-  </li>
-</span>
+      <span class="col-1">
+          <input type="checkbox" class='favorite-checkbox col-1' id=${story.storyId}></input>
+      </span>
+      <span class="col-11">
+          <span class = "col-1">
+          </span>
+          <div class = "d-flex flex-column bd-hightlight justify-content-start">
+              <div class="col">
+                  <a href="${story.url}" target="a_blank" class="story-link">
+                      ${story.title} 
+                  </a>
+                  <small class="story-hostname">(${hostName})</small>
+              </div>
+              <div class = "col">
+                  <small class="story-author col text-success">by ${story.author}</small>
+              </div>
+              <div class = "col">
+                  <small class="story-user col text-warning">posted by ${story.username}</small>
+              </div>         
+          </div>
+          </li>
+      </span> 
+      <hr>
+</div>
+</div>
     `);
 }
 
@@ -113,3 +120,23 @@ const $grabTitleAuthorURLInput = () => {
   return userInputObj
 }
 
+// $(document).ready(async function () {
+//   $('ol#all-stories-list').on('change', 'input[type="checkbox"]', await currentUser.handleFavorites(e));
+// });
+
+$(document).ready(function () {
+if (currentUser)
+  {
+    $('ol#all-stories-list').on('change', 'input[type="checkbox"]', function () {
+      if ($(this).prop('checked')) {
+        // Checkbox is checked, perform action
+        console.log('Checkbox checked', $(':checked').eq(-1), $(this));
+        // Your code to handle the checked state
+      } else {
+        // Checkbox is unchecked, perform action
+        console.log('Checkbox unchecked', $(':not(:checked)').eq(-1), $(this));
+        // Your code to handle the unchecked state
+      }
+    });
+  }
+});
