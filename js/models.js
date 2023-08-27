@@ -23,8 +23,8 @@ class Story {
 
   /** Parses hostname out of URL and returns it. */
 
-  getHostName() {
-    let url = new URL(this.url)
+  static getHostName(Story) {
+    let url = new URL(Story.url)
     let hostName = url.hostname
     return hostName
   }
@@ -75,8 +75,6 @@ class StoryList {
    */
 
   async addStory ( user, userStoryURLobj) {
-    // UNIMPLEMENTED: complete this function!
-    
     const randNum = (numLim) => Math.floor(Math.random() * numLim)
     const randLetterOrNumber = () => {
       let char = 'abcdefghijklmnopqrstuvxyz1234567890';
@@ -234,44 +232,13 @@ class User {
     }
   }
 
-  addFavorite = async (inputObj, token) => {
+  static addOrRemoveFaveStoryForCurrentUser = async (storyId, checkedOrNotBool) => {
+    let { username, loginToken: token} = currentUser ? currentUser : {username: localStorage.getItem('username'), token: localStorage.getItem('token')}
     let url = BASE_URL + `/users/${username}/favorites/${storyId}`
-    let response = await axios.post(url, inputObj, token)
-    currentUser = response
+    let response = checkedOrNotBool ? await axios.post(url, {token}) : await axios.delete(url, {params: {token}})
+    console.log(typeof response.data.user.ownStories)
+    return currentUser = {loginToken: localStorage.getItem('token'), ...response.data.user}
   }
   
-  removeFavorite = async (inputObj, token) => {
-    let url = BASE_URL + `/users/${username}/favorites/${storyId}`
-    let response = await axios.delete(url, inputObj, token)
-    currentUser = response
-  }
-  
-  handleFavorites = async (evt) => {
-    let username = currentUser ? currentUser.username : localStorage.getItem('username')
-    let token = currentUser ? currentUser.token : localStorage.getItem('token')
-    let $favourite = evt.target.tagName === 'INPUT' && evt.target.attr('type') === 'checkbox' ? evt.target : $(evt.target).closest($('input[type="checkbox"]')) ; //set this equal to evt.target
-    let storyId = $favourite.closest('li').attr('id') //not sure this is right syntax for .closest()
-  
-  
-    if ($favourite.val() === true) await currentUser.addFavorite({storyId, username, token});
-    if ($favourite.val() === false) await currentUser.removeFavorite({storyId, username, token});
-  }
-  
-  $handleNavClick = async (evt, idModifier) => {
-    if ($(evt.target).attr(id) === `${idModifier}-stories`) {
-      idModifier === 'favourite'? currentUser.favorites() : currentUser.ownStories();
-      
-      let $newDiv = $(`<div id ="${idModifier}-stories"></div>`)
-      let $storyDiv = $('section.stories-container.container')
-      $storyDiv.empty().append($newDiv)
-  
-      let listofOwnAndFavoriteStories = [this.favorites, this.ownStories]
-  
-      let contentList = idModifier === 'favourite'? listofOwnAndFavoriteStories[0] : listofOwnAndFavoriteStories[1];
-  
-      contentList.forEach(story => {
-        $newDiv.append(generateStoryMarkup(story))
-      });
-    } 
-  } 
 }
+
