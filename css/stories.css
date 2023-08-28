@@ -8,6 +8,13 @@
   color: gray;
   font-size: 0.8rem;
   margin: 10px 0;
+  position: relative
+}
+
+
+#user-favorites, #user-own-stories {
+  list-style: none;
+  padding-left: 10px;
 }
 
 #stories-loading-msg {
@@ -30,10 +37,27 @@
   text-decoration: none;
 }
 
-.story-author {
+.story-container {
   margin-left: 2em;
+}
+
+.story-author {
+  /* margin-left: 2em; */
+  color: orange;
 }
 
 .story-user {
   display: block;
+  color: green
+}
+
+.trash-can {
+  margin-left: 2em;
+  position: absolute;
+  left: -3%;
+  top: 40%
+}
+
+i:hover {
+  color: red;
 }

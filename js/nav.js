@@ -5,8 +5,7 @@
  */
 
 /** Show main list of all stories when click site name */
-let tab = 'frontpage'; //what type of content is being displayed currently ('frontpage' vs 'favorites' vs 'own stories')
-
+let tab = 'frontpage'
 function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
@@ -33,13 +32,36 @@ const $createSaveStoryCheckboxes = () => {
     return item.storyId
   })
   $('li:not(:has(input[type="checkbox"]))').each(function() {
-    let $currentStoryId = $(this).attr('id')
-    let $checkboxLabel = $(`<label class="checkbox-label"></label>`)
+    let $currentStoryId = $(this).attr('id');
+    let $checkboxLabel = $(`<label class="checkbox-label"></label>`);
     const $checkboxHTML = $(`<input type="checkbox" class="custom-checkbox"> `);
-    favoriteStoriesStoryIdArr.includes($currentStoryId) ? $checkboxHTML.prop('checked', true) : $checkboxHTML.prop('checked', false) 
-    let $heart = $checkboxHTML.prop('checked') ? $(`<i class="fa-regular fa-heart"></i>`) : $(`<i class="fa-solid fa-heart"></i>`)
-    $checkboxLabel.append($checkboxHTML, $heart)
+    favoriteStoriesStoryIdArr.includes($currentStoryId) ? $checkboxHTML.prop('checked', true) : $checkboxHTML.prop('checked', false)
+
+    let heartModifier = $checkboxHTML.prop('checked') ? 'fas' : 'far'
+    let $heart = `
+      <span class="favorite-input">
+        <i class="${heartModifier} fa-heart"></i>
+      </span>`
+
     $(this).prepend($checkboxLabel);
+    $checkboxLabel.append($checkboxHTML, $heart)
+  });
+}
+
+const $updateSaveStoryCheckBoxes = () => {
+  $('li:has(input[type="checkbox"])').each(function() {
+    let $checkboxLabel = $(`<label class="checkbox-label"></label>`);
+    const $checkboxHTML = $(`<input type="checkbox" class="custom-checkbox"> `);
+    let $closestHeartIcon = $checkboxHTML.closest('i.fa-heart')
+    
+    let heartModifier = $checkboxHTML.prop('checked') ? 'fas' : 'far'
+    let $heart = `
+      <span class="favorite-input">
+        <i class="${heartModifier} fa-heart"></i>
+      </span>`
+
+    $(this).prepend($checkboxLabel);
+    $checkboxLabel.append($checkboxHTML, $heart)
   });
 }
 
@@ -64,9 +86,9 @@ $('a#user-submit').on('click', ()=>{
 })
 
 $('a#user-favorites').on('click', ()=>{
+  tab = 'favorites'
   let user = currentUser ? currentUser : checkForRememberedUser()
   let $frontpageStories = $('ol#all-stories-list')
-  tab = 'favorites'
   if (user){
     $frontpageStories.empty()
     for (let faveStory of user.favorites){
@@ -79,9 +101,9 @@ $('a#user-favorites').on('click', ()=>{
 })
 
 $('a#user-own-stories').on('click', ()=>{
+  tab = 'own-stories'
   let user = currentUser ? currentUser : checkForRememberedUser()
   let $frontpageStories = $('ol#all-stories-list')
-  tab = 'own-stories'
   if (user){
     $frontpageStories.empty()
     for (let ownStory of (user.ownStories || user.stories)){ //API sometimes returns user.stories instead of user.ownStories

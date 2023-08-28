@@ -241,7 +241,6 @@ class User {
     let { username, loginToken: token} = currentUser ? currentUser : {username: localStorage.getItem('username'), token: localStorage.getItem('token')}
     let url = BASE_URL + `/users/${username}/favorites/${storyId}`
     let response = checkedOrNotBool ? await axios.post(url, {token}) : await axios.delete(url, {params: {token}})
-    console.log(typeof response.data.user.ownStories)
     return currentUser = {loginToken: localStorage.getItem('token'), ...response.data.user}
   }
 

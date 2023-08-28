@@ -27,24 +27,24 @@ function generateStoryMarkup(story) {
   const hostName = Story.getHostName(story);
   return $(`
   <li id="${story.storyId}">
-      <span class="col-11">
-          <span class = "col-1">
+      <div class="story-container">
+          <span class = "input-container">
           </span>
-          <div class = "d-flex flex-column bd-hightlight justify-content-start">
-              <div class="col">
-                  <a href="${story.url}" target="a_blank" class="story-link">
+          <div class = "story-content-div">
+              <div class="story-title">
+                  <a href="${story.url}" target="_blank" class="story-link">
                       ${story.title} 
                   </a>
                   <small class="story-hostname">(${hostName})</small>
               </div>
-              <div class = "col">
+              <div class = "story-author">
                   <small class="story-author col text-success">by ${story.author}</small>
               </div>
-              <div class = "col">
+              <div class = "story-user">
                   <small class="story-user col text-warning">posted by ${story.username}</small>
               </div>         
           </div>
-          </span> 
+          </div> 
         </li>
       <hr>
     `);
@@ -54,7 +54,7 @@ function generateStoryMarkup(story) {
 
 function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
-
+  tab = 'frontpage'
   $allStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
@@ -117,7 +117,8 @@ const $grabTitleAuthorURLInput = () => {
 $('ol#all-stories-list').on('change', 'input[type="checkbox"]', async function () {
   let storyId = $(this).closest('li').attr('id');
   let faveOrNotBool = $(this).prop('checked'); //is checkbox ticked off = true or false
-  let user = currentUser ? currentUser : checkForRememberedUser() 
+  // let savedStoryClass = $('<i class="fas fa-heart"></i>')
+  // let unsavedStoryClass = $('<i class="far fa-heart"></i>')
   if ($(this).prop('checked')) {
     // Checkbox is checked, perform action
     currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to save stories to favorites')
@@ -126,10 +127,10 @@ $('ol#all-stories-list').on('change', 'input[type="checkbox"]', async function (
     // Checkbox is unchecked, perform action
     currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to remove stories from favorites')
     $createSaveStoryCheckboxes()
+
     if (tab === 'favorites'){
       $(this).closest('li').remove()
     }
-    
   }
 });
 
@@ -140,17 +141,21 @@ $('ol#all-stories-list').on('mouseenter', 'li', async function (){
       return item.storyId
     })
     if (ownStoriesStoryIdArr.includes($(this).attr('id'))) {
-      let $newBtn = $('<button id="delete-btn" >DELETE</button>')
+      let $newBtn = $(`
+        <span class="trash-can">
+        <i class="fas fa-trash-alt"></i>
+      </span>`
+      )
       $newBtn.on('click', async () => {
         await StoryList.removeStory($(this).attr('id'));
         $(this).remove();
         currentUser = await User.updateUser(); //update currentUser
       })
-      $(this).prepend($newBtn)
+      $(this).append($newBtn)
     }
   }
 })
 
 $('ol#all-stories-list').on('mouseleave', 'li', () => {
-  $('#delete-btn').remove()
+  $('.trash-can').remove()
 })

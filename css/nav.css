@@ -4,20 +4,37 @@ nav {
   display: flex;
   background-color: #ff6600;
   align-items: center;
-  padding: 5px 20px;
-  border-radius: 3px 3px 0 0;
+  padding: 10px 20px;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+}
+
+div.nav-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  border-left: black 1px;
+  position: relative;
+  width: fit-content;
 }
 
 .navbar-brand {
   font-weight: bold;
+  border-right: black 10px;
 }
 
 .nav-link {
-  font-size: 0.85rem;
+  /* font-size: 0.85rem; */
   margin: 0 3px;
 }
 
 .nav-right {
-  margin-left: auto;
   text-align: right;
+  margin-left: auto;
 }
+ 
+/* #nav-login + #nav-user-profile + #nav-logout {
+  position: absolute;
+  right: 0%;
+} */
