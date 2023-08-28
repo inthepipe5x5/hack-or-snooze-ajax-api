@@ -122,11 +122,35 @@ $('ol#all-stories-list').on('change', 'input[type="checkbox"]', async function (
     // Checkbox is checked, perform action
     currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to save stories to favorites')
     $createSaveStoryCheckboxes()
-
   } else {
     // Checkbox is unchecked, perform action
     currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to remove stories from favorites')
     $createSaveStoryCheckboxes()
+    if (tab === 'favorites'){
+      $(this).closest('li').remove()
+    }
+    
   }
 });
 
+$('ol#all-stories-list').on('mouseenter', 'li', async function (){
+  if (currentUser){
+    let realStories = [currentUser.stories, currentUser.ownStories].filter(realArray => realArray)[0]
+    let ownStoriesStoryIdArr = realStories.map(item => {
+      return item.storyId
+    })
+    if (ownStoriesStoryIdArr.includes($(this).attr('id'))) {
+      let $newBtn = $('<button id="delete-btn" >DELETE</button>')
+      $newBtn.on('click', async () => {
+        await StoryList.removeStory($(this).attr('id'));
+        $(this).remove();
+        currentUser = await User.updateUser(); //update currentUser
+      })
+      $(this).prepend($newBtn)
+    }
+  }
+})
+
+$('ol#all-stories-list').on('mouseleave', 'li', () => {
+  $('#delete-btn').remove()
+})

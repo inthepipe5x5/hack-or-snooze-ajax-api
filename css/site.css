@@ -121,3 +121,29 @@ form > hr {
     margin: 8px auto;
   }
 }
+
+/* Check Box Styling */
+/* Hide the default cHeckbox */
+.custom-checkbox {
+  display: none;
+}
+
+/* Style the label to position it relative to the checkbox */
+.checkbox-label {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Style the Font Awesome icon to appear as a checkbox */
+.checkbox-label i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px; /* Adjust the size as needed */
+  color: #333; /* Change the color as needed */
+}
+
+/* Style the icon when the checkbox is checked */
+.custom-checkbox:checked + i {
+  color:red; /* Change the color as needed */
+}

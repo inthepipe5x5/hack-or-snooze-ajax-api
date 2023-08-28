@@ -114,6 +114,11 @@ class StoryList {
     location.reload()
     return response 
   }
+  static removeStory = async (storyId) => {
+    let {username, loginToken: token} = currentUser
+    let response = await axios.delete(BASE_URL + `/stories/${storyId}`, {params: {token, username}})
+    return response
+  }
 }
 
 
@@ -239,6 +244,11 @@ class User {
     console.log(typeof response.data.user.ownStories)
     return currentUser = {loginToken: localStorage.getItem('token'), ...response.data.user}
   }
-  
+
+  static updateUser = async () => {
+    let {loginToken: token, username} = currentUser
+    let response = await axios.get(BASE_URL+`/users/${username}`, {params:{token, username}})
+    return currentUser = {loginToken: token, ...response.data.user}
+  }
 }
 

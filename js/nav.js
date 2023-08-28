@@ -5,12 +5,13 @@
  */
 
 /** Show main list of all stories when click site name */
+let tab = 'frontpage'; //what type of content is being displayed currently ('frontpage' vs 'favorites' vs 'own stories')
 
 function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
-  // if (currentUser) $createSaveStoryCheckboxes; //not needed delete once i find where the event listener  for the main a.all-nav ie the "hack or snooze" link 
+  tab = 'frontpage'
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -31,11 +32,14 @@ const $createSaveStoryCheckboxes = () => {
   let favoriteStoriesStoryIdArr = currentUser.favorites.map(item => {
     return item.storyId
   })
-  $('li').each(function() {
+  $('li:not(:has(input[type="checkbox"]))').each(function() {
     let $currentStoryId = $(this).attr('id')
-    const checkboxHTML = $(`<input type="checkbox" class="favorite-checkbox"></input>`);
-    favoriteStoriesStoryIdArr.includes($currentStoryId) ? checkboxHTML.prop('checked', true) : checkboxHTML.prop('checked', false) 
-    $(this).prepend(checkboxHTML);
+    let $checkboxLabel = $(`<label class="checkbox-label"></label>`)
+    const $checkboxHTML = $(`<input type="checkbox" class="custom-checkbox"> `);
+    favoriteStoriesStoryIdArr.includes($currentStoryId) ? $checkboxHTML.prop('checked', true) : $checkboxHTML.prop('checked', false) 
+    let $heart = $checkboxHTML.prop('checked') ? $(`<i class="fa-regular fa-heart"></i>`) : $(`<i class="fa-solid fa-heart"></i>`)
+    $checkboxLabel.append($checkboxHTML, $heart)
+    $(this).prepend($checkboxLabel);
   });
 }
 
@@ -62,7 +66,7 @@ $('a#user-submit').on('click', ()=>{
 $('a#user-favorites').on('click', ()=>{
   let user = currentUser ? currentUser : checkForRememberedUser()
   let $frontpageStories = $('ol#all-stories-list')
-
+  tab = 'favorites'
   if (user){
     $frontpageStories.empty()
     for (let faveStory of user.favorites){
@@ -77,7 +81,7 @@ $('a#user-favorites').on('click', ()=>{
 $('a#user-own-stories').on('click', ()=>{
   let user = currentUser ? currentUser : checkForRememberedUser()
   let $frontpageStories = $('ol#all-stories-list')
-
+  tab = 'own-stories'
   if (user){
     $frontpageStories.empty()
     for (let ownStory of (user.ownStories || user.stories)){ //API sometimes returns user.stories instead of user.ownStories
