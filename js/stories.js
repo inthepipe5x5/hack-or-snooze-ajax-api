@@ -45,8 +45,8 @@ function generateStoryMarkup(story) {
               </div>         
           </div>
           </div> 
+          <hr>
         </li>
-      <hr>
     `);
 }
 
@@ -118,7 +118,7 @@ $('ol#all-stories-list').on('change', 'input[type="checkbox"]', async function (
   let storyId = $(this).closest('li').attr('id');
   let faveOrNotBool = $(this).prop('checked'); //is checkbox ticked off = true or false
   $createSaveStoryCheckboxes()
-  
+
   $('i').each(function() {
     let $checkbox = $(this).closest('li').find('input[type="checkbox"]'); // Find the closest checkbox element
     let faveOrNotBool = $checkbox.prop('checked');
