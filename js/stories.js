@@ -117,17 +117,27 @@ const $grabTitleAuthorURLInput = () => {
 $('ol#all-stories-list').on('change', 'input[type="checkbox"]', async function () {
   let storyId = $(this).closest('li').attr('id');
   let faveOrNotBool = $(this).prop('checked'); //is checkbox ticked off = true or false
-  // let savedStoryClass = $('<i class="fas fa-heart"></i>')
-  // let unsavedStoryClass = $('<i class="far fa-heart"></i>')
+  $createSaveStoryCheckboxes()
+  
+  $('i').each(function() {
+    let $checkbox = $(this).closest('li').find('input[type="checkbox"]'); // Find the closest checkbox element
+    let faveOrNotBool = $checkbox.prop('checked');
+    let faved = 'fas fa-heart';
+    let not = 'far fa-heart';
+    
+    if (faveOrNotBool) {
+      $(this).removeClass(not).addClass(faved); // Add the faved class
+    } else {
+      $(this).removeClass(faved).addClass(not); // Add the not class
+    }
+  });
+  
   if ($(this).prop('checked')) {
     // Checkbox is checked, perform action
     currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to save stories to favorites')
-    $createSaveStoryCheckboxes()
   } else {
     // Checkbox is unchecked, perform action
     currentUser ? (await User.addOrRemoveFaveStoryForCurrentUser(storyId, faveOrNotBool)) : alert('please log in to remove stories from favorites')
-    $createSaveStoryCheckboxes()
-
     if (tab === 'favorites'){
       $(this).closest('li').remove()
     }
